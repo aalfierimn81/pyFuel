@@ -7,7 +7,8 @@ import tempfile
 
 PREZZI = "https://www.mimit.gov.it/images/exportCSV/prezzo_alle_8.csv"
 ANAGRAFICA = "https://www.mimit.gov.it/images/exportCSV/anagrafica_impianti_attivi.csv"
-IMAGE_PATH = "/home/andrea/Documenti/personale/pyFuel/img/"
+IMAGE_PATH = "img/"
+
 
 DEBUG = 1
 
@@ -112,6 +113,7 @@ for i in range (0, len(anagrafiche)):
 
 import folium
 import webbrowser
+import os
 
 loc = [location.raw['lat'], location.raw['lon']] 
 map = folium.Map(location=loc, tiles="OpenStreetMap")
@@ -135,7 +137,7 @@ printDebug ("Benzina minima " + str(min_benzina))
 for i in range (0, len(near_fuel)):    
     flg_green = 0    
     html = "<p>"
-    html += near_fuel[i]['idImpianto'] + " <b>" + near_fuel[i]['Bandiera'] + "<img src = \"" + IMAGE_PATH + near_fuel[i]['Bandiera']+".png\" width =\"30\">" + "</b><br>"
+    html += near_fuel[i]['idImpianto'] + " <b>" + near_fuel[i]['Bandiera'] + "<img src = \"" +os.getcwd()+"/"+IMAGE_PATH + near_fuel[i]['Bandiera']+".png\" width =\"30\">" + "</b><br>"
     html += near_fuel[i]['Indirizzo'] + " " + near_fuel[i]['Comune'] + " " + near_fuel[i]['Provincia']
     html += "</p>"
     for j in range (len(prezzi)):
@@ -185,5 +187,5 @@ printDebug (temp.name)
 
 map.save(temp.name)
 
-time.sleep(1)
-webbrowser.open(temp.name)
+time.sleep(2)
+webbrowser.get('firefox').open(temp.name)
